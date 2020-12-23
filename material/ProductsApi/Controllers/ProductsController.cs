@@ -5,6 +5,8 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ProductsApi.Models;
+using Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,38 +18,46 @@ namespace ProductsApi.Controllers
     {
         private readonly ILogger<ProductsController> _logger;
         //private readonly AdventureWorksDbContext _context;
-        private readonly object[] _products;
+        private readonly ProductRepository _repository;
 
         public ProductsController(ILogger<ProductsController> logger,
-            object[] products
+            ProductRepository repository
             //, AdventureWorksDbContext context
             )
         {
             _logger = logger;
             //_context = context;
             _logger.LogInformation("ProductsController constructor");
-            _products = products;
+            _repository = repository;
         }
 
         // GET: api/values
         [HttpGet]
-        public IEnumerable<object> Get()
+        public IEnumerable<Product> Get()
         {
-            return _products;
+            return _repository.Get();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetById(int id)
         {
-            return Ok(_products[0]);
+            var result = _repository.Get().FirstOrDefault(p => p.Id == id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+
+
         }
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Product value)
         {
-            //return CreatedAtAction(nameof(GetById), new { Id = value.Id }, value);
+            Product _result = _repository.Add(value);
+            return CreatedAtAction(nameof(GetById), new { Id = value.Id }, value);
         }
 
         // PUT api/values/5
@@ -60,7 +70,8 @@ namespace ProductsApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return new ObjectResult(new object()) { StatusCode = (int)HttpStatusCode.NotImplemented };
+            _repository.Delete();
+            return new ObjectResult(new object()) { StatusCode = (int)HttpStatusCode.OK };
         }
     }
 }
