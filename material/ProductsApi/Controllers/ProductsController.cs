@@ -70,7 +70,7 @@ namespace ProductsApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _repository.Delete();
+            _repository.Delete(id);
             return new ObjectResult(new object()) { StatusCode = (int)HttpStatusCode.OK };
         }
     }
