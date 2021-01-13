@@ -1,18 +1,18 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using ProductsApi.Models;
+
 #nullable disable
 
-namespace ProductsApi.Data
+namespace ProductsApi.Models
 {
-    public partial class AdventureWorksDbContext : DbContext
+    public partial class AdventureworksContext : DbContext
     {
-        public AdventureWorksDbContext()
+        public AdventureworksContext()
         {
         }
 
-        public AdventureWorksDbContext(DbContextOptions<AdventureWorksDbContext> options)
+        public AdventureworksContext(DbContextOptions<AdventureworksContext> options)
             : base(options)
         {
         }
@@ -35,11 +35,11 @@ namespace ProductsApi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("data source=localhost,1433;initial catalog=Adventureworks;persist security info=True;user id=sa;password=Password.123;MultipleActiveResultSets=True;App=EntityFramework");
-            }
+//            if (!optionsBuilder.IsConfigured)
+//            {
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                optionsBuilder.UseSqlServer("data source=localhost,1433;initial catalog=Adventureworks;persist security info=True;user id=sa;password=Password.123;MultipleActiveResultSets=True;App=EntityFramework");
+//            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

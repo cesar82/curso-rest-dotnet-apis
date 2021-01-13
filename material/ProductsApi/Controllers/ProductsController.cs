@@ -17,7 +17,7 @@ namespace ProductsApi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ILogger<ProductsController> _logger;
-        //private readonly AdventureWorksDbContext _context;
+        // private readonly AdventureWorksDbContext _context;
         private readonly ProductRepository _repository;
 
         public ProductsController(ILogger<ProductsController> logger,
@@ -42,7 +42,7 @@ namespace ProductsApi.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var result = _repository.Get().FirstOrDefault(p => p.Id == id);
+            var result = _repository.Get().FirstOrDefault(p => p.ProductId == id);
             if (result == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace ProductsApi.Controllers
         public IActionResult Post([FromBody] Product value)
         {
             Product _result = _repository.Add(value);
-            return CreatedAtAction(nameof(GetById), new { Id = value.Id }, value);
+            return CreatedAtAction(nameof(GetById), new { Id = value.ProductId }, value);
         }
 
         // PUT api/values/5

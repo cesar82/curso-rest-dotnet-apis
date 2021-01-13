@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ProductsApi.Models;
-using Core.Data;
+using ProductsApi.Data;
 
 namespace Repositories
 {
@@ -18,6 +18,7 @@ namespace Repositories
 
         public Product[] Get()
         {
+            Console.WriteLine(_context.Products);
             return _context.Products.ToArray();
         }
 

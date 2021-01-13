@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Data;
+using ProductsApi.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,10 +30,13 @@ namespace ProductsApi
         {
             services.AddDbContext<AdventureWorksDbContext>(builder => {
 
-                var options = builder.UseInMemoryDatabase("FakeDatabase");
+                //var options = builder.UseInMemoryDatabase("FakeDatabase");
+
+                var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
                 var dbOptions = new DbContextOptionsBuilder<AdventureWorksDbContext>()
-                                   .UseInMemoryDatabase("FakeDatabase").Options;
+                                    .UseSqlServer(connectionString).Options;
+                                   // .UseInMemoryDatabase("FakeDatabase").Options;
 
                 using var db = new AdventureWorksDbContext(dbOptions);
                 db.Database.EnsureCreated();
